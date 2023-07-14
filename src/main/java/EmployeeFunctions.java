@@ -41,7 +41,7 @@ public class EmployeeFunctions {
         }
         return null;
     }
-    public void addEmployee(Employee employee){
+    public static void addEmployee(Employee employee){
         try {
             Connection connection = DBConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO Employee (name, ID, age, salary) VALUES (?, ?, ?, ?)");
@@ -81,7 +81,7 @@ public class EmployeeFunctions {
         }
     }
     //function to get all employees
-    public List<Employee> getAllEmployees(){
+    public static List<Employee> getAllEmployees(){
         try {
             Connection connection = DBConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Employee");
