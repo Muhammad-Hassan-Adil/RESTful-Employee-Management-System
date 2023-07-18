@@ -1,9 +1,11 @@
+package services;
+import domain.Employee;
 import java.sql.*;
 import java.util.*;
-public class EmployeeFunctions {
-    public Employee getEmployeeByID(int ID){
+public class EmployeeFunctionService {
+    public Employee getEmployeeByID(int ID) throws ClassNotFoundException{
         try {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnectionService.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Employee WHERE ID = ?");
             preparedStatement.setInt(1, ID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -12,7 +14,7 @@ public class EmployeeFunctions {
                 employee.setName(resultSet.getString("name"));
                 employee.setID(resultSet.getInt("ID"));
                 employee.setAge(resultSet.getInt("age"));
-                employee.setSalary(resultSet.getDouble("salary"));
+                employee.setSalary(resultSet.getBigDecimal("salary"));
             }
             return employee;
         }
@@ -21,9 +23,9 @@ public class EmployeeFunctions {
         }
         return null;
     }
-    public Employee getEmployeeByName(String name){
+    public Employee getEmployeeByName(String name) throws ClassNotFoundException{
         try {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnectionService.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Employee WHERE name = ?");
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -32,7 +34,7 @@ public class EmployeeFunctions {
                 employee.setName(resultSet.getString("name"));
                 employee.setID(resultSet.getInt("ID"));
                 employee.setAge(resultSet.getInt("age"));
-                employee.setSalary(resultSet.getDouble("salary"));
+                employee.setSalary(resultSet.getBigDecimal("salary"));
             }
             return employee;
         }
@@ -41,23 +43,24 @@ public class EmployeeFunctions {
         }
         return null;
     }
-    public static void addEmployee(Employee employee){
+    public static void addEmployee(Employee employee) throws ClassNotFoundException{
         try {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnectionService.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO Employee (name, ID, age, salary) VALUES (?, ?, ?, ?)");
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setInt(2, employee.getID());
             preparedStatement.setInt(3, employee.getAge());
-            preparedStatement.setDouble(4, employee.getSalary());
+            preparedStatement.setBigDecimal(4, employee.getSalary());
             preparedStatement.executeUpdate();
+            connection.close();
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void updateEmployeeByID(int id){
+    public void updateEmployeeByID(int id) throws ClassNotFoundException{
         try {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnectionService.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Employee SET name = ?, age = ?, salary = ? WHERE ID = ?");
             preparedStatement.setString(1, "Hassan");
             preparedStatement.setInt(2, 20);
@@ -69,9 +72,9 @@ public class EmployeeFunctions {
             e.printStackTrace();
         }
     }
-    public void deleteEmployeeByID(int ID){
+    public void deleteEmployeeByID(int ID) throws ClassNotFoundException{
         try {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnectionService.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Employee WHERE ID = ?");
             preparedStatement.setInt(1, ID);
             preparedStatement.executeUpdate();
@@ -81,9 +84,9 @@ public class EmployeeFunctions {
         }
     }
     //function to get all employees
-    public static List<Employee> getAllEmployees(){
+    public static List<Employee> getAllEmployees() throws ClassNotFoundException{
         try {
-            Connection connection = DBConnection.getConnection();
+            Connection connection = DBConnectionService.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Employee");
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Employee> employees = new ArrayList<>();
@@ -92,7 +95,7 @@ public class EmployeeFunctions {
                 employee.setName(resultSet.getString("name"));
                 employee.setID(resultSet.getInt("ID"));
                 employee.setAge(resultSet.getInt("age"));
-                employee.setSalary(resultSet.getDouble("salary"));
+                employee.setSalary(resultSet.getBigDecimal("salary"));
                 employees.add(employee);
             }
             return employees;
@@ -104,3 +107,4 @@ public class EmployeeFunctions {
     }
 
 }
+

@@ -1,9 +1,11 @@
+package services;
 import com.zaxxer.hikari.*;
 import java.sql.*;
-public class DBConnection {
-    private static HikariConfig config = new HikariConfig();
+public class DBConnectionService {
     private static HikariDataSource dataSource;
-    public static Connection getConnection() {
+    public static Connection getConnection()throws ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://localhost:3306/Employee");
         config.setUsername("root");
         config.setPassword("#Pirates20");
@@ -21,3 +23,4 @@ public class DBConnection {
         dataSource.close();
     }
 }
+

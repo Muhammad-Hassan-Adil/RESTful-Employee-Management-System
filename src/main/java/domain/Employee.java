@@ -1,9 +1,11 @@
+package domain;
+import java.math.BigDecimal;
 public class Employee {
     private String name;
     private int ID,age;
-    private double salary;
+    private BigDecimal salary;
     public Employee() {}
-    public Employee(String name, int ID, int age, double salary) {
+    public Employee(String name, int ID, int age, BigDecimal salary) {
         this.name = name;
         this.ID = ID;
         this.age = age;
@@ -18,7 +20,7 @@ public class Employee {
     public int getAge() {
         return age;
     }
-    public double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
     public void setName(String name) {
@@ -30,7 +32,7 @@ public class Employee {
     public void setAge(int age) {
         this.age = age;
     }
-    public void setSalary(double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 }
